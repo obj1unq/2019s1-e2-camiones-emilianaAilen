@@ -1,0 +1,81 @@
+import camion.*
+import cosas.*
+describe "camion"{
+	fixture {
+	camion.cargar(knightRider)
+	camion.cargar(bumblebee)	
+	}
+
+	test "si se descarga a bumblebee queda una sola cosa"{
+		camion.descargar(bumblebee)
+		assert.that(camion.cosas().size()== 1)
+	}
+	test "peso total del camion igual a 2300"{
+		assert.equals(2300,camion.pesoTotal())
+	}
+	test "peso total si se agrega contenedor"{
+		arena.setearPeso(100)
+		contenedor.agregarCosa(knightRider)
+		contenedor.agregarCosa(arena)
+		camion.cargar(contenedor)
+		assert.equals(3020,camion.pesoTotal())
+	}
+	test "no se encuentra excedido de peso"{
+		assert.notThat(camion.excedidoDePeso())
+	}
+	
+	test "se encuentra excedido de peso"{
+		arena.setearPeso(100)
+		contenedor.agregarCosa(knightRider)
+		contenedor.agregarCosa(arena)
+		camion.cargar(contenedor)
+		assert.that(camion.excedidoDePeso())
+	}
+	test "cosas mas peligosas que el valor indicado"{
+		assert.that(camion.objetosPeligrosos(25).contains(bumblebee))
+		
+	}
+	
+	test "bumblebee es más peligroso que knigthRider"{
+		assert.that(camion.objetosMasPeligrososQue(knightRider).contains(bumblebee))
+	}
+	
+	test "si puede circular en ruta"{
+		assert.that(camion.puedeCircularEnRuta(50))
+	}
+	
+	test "no se puede circular en ruta"{
+		assert.notThat(camion.puedeCircularEnRuta(30))
+	}
+	
+	test "tiene algo que pesa entre 300 y 600"{
+		assert.that(camion.tieneAlgoQuePesaEntre(300, 600))
+	}
+	
+	test "la cosa mas pesada será bumblebee"{
+		assert.equals(bumblebee, camion.cosaMasPesada())
+	}
+	
+	test "total de bultos igual a 3"{
+		assert.equals(3, camion.totalBultos())
+	}
+	test "total de bultos si agrega paquete deladrillos"{
+		paqueteLadrillos.cantLadrillos(300)
+		camion.cargar(paqueteLadrillos)
+		assert.equals(6, camion.totalBultos())
+	}
+	
+	test "lista de pesos"{
+		assert.that(camion.pesos().contains(500))
+		assert.that(camion.pesos().contains(800))
+	}
+	
+	test "si se carga a bateria antiárea este tendra misiles cargados"{
+		camion.cargar(bateriaAntiaerea)
+		assert.that(bateriaAntiaerea.conMisiles())
+	}
+	
+	
+}	
+
+
