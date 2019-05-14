@@ -1,0 +1,116 @@
+import cosas.*
+
+//bumblebee
+
+test "nivel de peligrosidad igual a 15 si esta transformado en auto" {
+	assert.equals(15, bumblebee.nivelPeligrosidad())
+}
+
+//paqueteLadrillos
+
+test"peso de paquete de 300 ladrillos es igual a 600"{
+	paqueteLadrillos.cantLadrillos(300)
+	assert.equals(600, paqueteLadrillos.peso())
+}
+
+test"cantidad de bultos es igual a 2"{
+	paqueteLadrillos.cantLadrillos(300)
+	assert.equals(2, paqueteLadrillos.bultos())
+}
+test"si reacciona la cantidad sera 312"{
+	paqueteLadrillos.cantLadrillos(300)
+	paqueteLadrillos.reacciona()
+	assert.equals(312, paqueteLadrillos.cantLadrillos())
+}
+test "si reacciona el peso cambia"{
+	paqueteLadrillos.cantLadrillos(300)
+	paqueteLadrillos.reacciona()
+	assert.that(paqueteLadrillos.peso() != 600)
+}
+
+//arena
+	test "peso de la arena segun lo que ingresa el usuario"{
+		arena.setearPeso(30)
+		assert.equals(30, arena.peso())	
+	}
+	test "al reaccionar su peso aumenta 20 kilos"{
+		arena.setearPeso(30)
+		arena.reacciona()
+		assert.equals(50, arena.peso())
+		
+	}
+//bateriaAntiaerea
+
+test "si se cargan misiles su peso será 300"{
+	bateriaAntiaerea.cargarMisiles()
+	assert.equals(300, bateriaAntiaerea.peso())
+}
+
+test "si no se cargan los misiles, su peso es 200"{
+	assert.equals(200, bateriaAntiaerea.peso())
+}
+
+test "nivel de peligrosidad es 100 con misiles cargados"{
+	bateriaAntiaerea.cargarMisiles()
+	assert.equals(100, bateriaAntiaerea.nivelPeligrosidad())
+}
+
+test "cantidad de bultos es 1,sin misiles cargados"{
+	assert.equals(1, bateriaAntiaerea.bultos())
+}
+
+test "si reacciona se cargan misiles (si ya no estaban cargados)"{
+	bateriaAntiaerea.reacciona()
+	assert.that(bateriaAntiaerea.conMisiles())
+}
+
+test "si reacciona y los misiles ya estaban cargados, no modifica nada"{
+	bateriaAntiaerea.cargarMisiles()
+	bateriaAntiaerea.reacciona()
+	assert.that(bateriaAntiaerea.conMisiles())
+}
+
+//contenedor
+ 
+test "peso de cosas y peso total del contenedor"{
+	contenedor.agregarCosa(knightRider)
+	contenedor.agregarCosa(bumblebee)
+	assert.equals(1300 , contenedor.pesoCosas())
+	assert.equals(1400 , contenedor.peso())
+}
+
+test "nivel de peligrosidad de contenedor"{
+	contenedor.agregarCosa(knightRider)
+	contenedor.agregarCosa(bumblebee)
+	assert.equals(15 , contenedor.nivelPeligrosidad()) 
+}
+
+test "bultos totales"{
+	contenedor.agregarCosa(knightRider)
+	contenedor.agregarCosa(bumblebee)
+	assert.equals(4 , contenedor.bultos())
+}
+test "si se reacciona y esta bumblebee, se transformará a robot"{
+	contenedor.agregarCosa(bumblebee)
+	contenedor.reacciona()
+	assert.notThat(bumblebee.transformadoEnAuto())
+}
+
+//residuos radioactivos
+
+test "al reaccionar su peso aumenta 15 kilos"{
+	residuosRadioactivos.setearPeso(50)
+	residuosRadioactivos.reacciona()
+	assert.equals(65, residuosRadioactivos.peso())
+}
+
+//embalaje
+
+test "peso si cubre a knightRider "{
+	embalaje.cubrirA(knightRider)
+	assert.equals(500 , embalaje.peso())
+}
+test "nivel de peligrosidad si cubre a knightRider"{ //knightRider tiene nivel de peligrosidad 10, 10/2 =5
+	embalaje.cubrirA(knightRider)
+	assert.equals(5 , embalaje.nivelPeligrosidad())
+}
